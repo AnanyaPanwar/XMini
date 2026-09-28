@@ -1,0 +1,133 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {% if q %}
+        Search - XMini
+    {% else %}
+        Home - XMini
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-12 col-md-8 col-lg-6">
+
+        <div class="d-flex justify-content-between align-items-center pb-3 border-bottom">
+
+            <h1 class="h4 fw-bold mb-0">
+
+                {% if q %}
+                    Results for "{{ q }}"
+                {% else %}
+                    Home
+                {% endif %}
+
+            </h1>
+
+            {% if q %}
+                <a
+                    href="{% url 'x_list' %}"
+                    class="btn btn-outline-light btn-sm"
+                >
+                    Clear search
+                </a>
+            {% endif %}
+
+        </div>
+
+
+        {% for x in xs %}
+
+            <article class="border-bottom py-3">
+
+                <div class="d-flex justify-content-between align-items-center mb-1">
+
+                    <div>
+
+                        <a
+                            href="{% url 'user_profile' x.user.username %}"
+                            class="fw-semibold text-body text-decoration-none"
+                        >
+                            @{{ x.user.username }}
+                        </a>
+
+                        <time
+                            class="text-body-secondary small ms-2"
+                            datetime="{{ x.created_at|date:'c' }}"
+                            title="{{ x.created_at|date:'j M Y, H:i' }}"
+                        >
+                            {{ x.created_at|timesince }} ago
+                        </time>
+
+                    </div>
+
+
+                    {% if x.user == user %}
+
+                        <div class="d-flex gap-2">
+
+                            <a
+                                href="{% url 'x_edit' x.pk %}"
+                                class="btn btn-outline-light btn-sm"
+                            >
+                                Edit
+                            </a>
+
+                            <a
+                                href="{% url 'x_delete' x.pk %}"
+                                class="btn btn-outline-danger btn-sm"
+                            >
+                                Delete
+                            </a>
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <p class="mb-2">
+                    {{ x.text|linebreaksbr }}
+                </p>
+
+
+                {% if x.photo %}
+
+                    <img
+                        src="{{ x.photo.url }}"
+                        alt="Photo attached to post"
+                        class="post-image rounded border"
+                        loading="lazy"
+                    >
+
+                {% endif %}
+
+            </article>
+
+        {% empty %}
+
+            <div class="py-5 text-center">
+
+                <p class="text-body-secondary mb-0">
+
+                    {% if q %}
+                        No posts match "{{ q }}".
+                    {% else %}
+                        No posts yet.
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
