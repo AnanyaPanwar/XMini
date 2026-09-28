@@ -2,6 +2,16 @@
 
 A full-stack social media web application built with Django. XMini is a lightweight X/Twitter-style platform where users can create accounts, publish posts, upload images, search posts and users, view profiles, and manage their own content.
 
+Live Demo
+
+🚀 Live Website: https://xmini.onrender.com/
+
+You can try the deployed XMini application here:
+
+Live Demo: https://xmini.onrender.com/
+GitHub Repository: https://github.com/AnanyaPanwar/XMini
+
+
 ## Features
 
 * User registration and authentication
